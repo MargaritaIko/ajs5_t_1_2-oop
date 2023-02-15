@@ -1,6 +1,6 @@
 import Character from '../index';
-
 import Daemon from '../daemon';
+import Magician from '../magician';
 
 test('to check that created object has all properties', () => {
   const input = new Character('Joe', 'Daemon');
@@ -30,7 +30,7 @@ test('to check that class throw new error for wrong type', () => {
 });
 
 test('to check for successful character level up', () => {
-  const input = new Character('Joe', 'Daemon');
+  const input = new Magician('Joe', 'Daemon');
   input.levelUp();
   const sample = {
     name: 'Joe',
@@ -45,9 +45,11 @@ test('to check for successful character level up', () => {
 });
 
 test('to check failed character level up', () => {
-  const input = new Daemon('Joe', 'Daemon');
-  input.health = 0;
-  expect(input.levelUp()).toThrow('You cannot level up.The hero is dead.');
+  expect(() => {
+    const input = new Daemon('Joe', 'Daemon');
+    input.health = 0;
+    input.levelUp();
+  }).toThrow('You cannot level up.The hero is dead.');
 });
 
 test('to check for successful damage to a character', () => {
@@ -66,7 +68,9 @@ test('to check for successful damage to a character', () => {
 });
 
 test('to check for failed character damage', () => {
-  const input = new Daemon('Joe', 'Daemon');
-  input.health = 0;
-  expect(input.damage(20)).toThrow('The hero is dead.');
+  expect(() => {
+    const input = new Daemon('Joe', 'Daemon');
+    input.health = 0;
+    input.damage(20);
+  }).toThrow('The hero is dead.');
 });
